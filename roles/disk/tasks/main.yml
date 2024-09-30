@@ -1,0 +1,13 @@
+- name: Resize root partition to use the entire disk
+  community.general.parted:
+    device: /dev/mmcblk0
+    number: 3
+    resize: true
+    part_end: -1GiB
+
+- name: Resize root partition
+  community.general.filesystem:
+    fstype: btrfs
+    dev: /dev/mmcblk0p3
+    resizefs: true
+

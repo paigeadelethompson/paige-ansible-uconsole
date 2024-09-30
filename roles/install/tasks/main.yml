@@ -1,0 +1,109 @@
+- name: Install full userland
+  community.general.xbps:
+    name:
+      - zzz
+      - zzz-user-hooks
+      - NetworkManager
+      - avahi
+      - lldpd
+      - openssh
+      - minidlna
+      - docker
+      - docker-compose
+      - docker-cli
+      - zsh
+      - nodejs
+      - yarn
+      - php
+      - composer
+      - ruby
+      - rustup
+      - perl
+      - go
+      - python3-poetry-core
+      - python3-ipython
+      - scapy
+      - jq
+      - parallel
+      - emacs
+      - weston
+      - weston-xwayland
+      - kmail
+      - kde5
+      - kde5-baseapps
+      - pipewire
+      - kpipewire
+      - kde-cli-tools
+      - konsole
+      - kdenlive
+      - ardour
+      - obs
+      - jack
+      - jack_capture
+      - jack_mixer
+      - qtractor
+      - audacious
+      - audacious-plugins
+      - libjack-pipewire
+      - wireplumber
+      - qjackctl
+      - easyeffects
+      - gstreamer-vaapi
+      - phonon-qt5-backend-gstreamer
+      - gstreamer1-pipewire
+      - vlc
+      - plasma-nm
+      - powerdevil
+      - print-manager
+      - dolphin
+      - gwenview
+      - kaffeine
+      - inkscape
+      - nerd-fonts
+      - libreoffice
+      - gimp
+      - kitty
+      - konqueror
+      - kdeconnect
+      - kgpg
+      - retroarch
+      - kodi
+      - kodi-addon-peripheral-joystick
+      - kodi-addon-pvr-iptvsimple
+      - kodi-addon-game-libretro
+      - qemu
+      - qemu-firmware
+      - qemu-system-aarch64
+      - qemu-tools
+      - libvirt
+      - binfmt-support
+      - openvpn
+      - wireguard
+      - wireguard-tools
+      - tor
+      - wireshark
+    state: present
+
+- name: Enable D-BUS
+  ansible.builtin.file:
+    src: /etc/sv/dbus
+    dest: /etc/runit/runsvdir/default/
+    owner: root
+    group: root
+    state: link
+
+- name: Enable SDDM
+  ansible.builtin.file:
+    src: /etc/sv/sddm
+    dest: /etc/runit/runsvdir/default/
+    owner: root
+    group: root
+    state: link
+
+- name: Enable NetworkManager
+  ansible.builtin.file:
+    src: /etc/sv/NetworkManager
+    dest: /etc/runit/runsvdir/default/
+    owner: root
+    group: root
+    state: link

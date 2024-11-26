@@ -2,6 +2,15 @@
   community.general.xbps:
     run_once: true
     name:
+      - rtl-sdr
+      - CubicSDR
+      - LimeSuite
+      - hackrf
+      - rx_tools
+      - uhd
+      - airspy
+      - gnuradio-osmosdr
+      - gqrx
       - zzz-user-hooks
       - irssi
       - pidgin

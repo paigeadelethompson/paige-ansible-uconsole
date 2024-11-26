@@ -1,13 +1,126 @@
-- name: Resize root partition to use the entire disk
-  community.general.parted:
-    device: /dev/mmcblk0
-    number: 3
-    resize: true
-    part_end: -1GiB
+- name: Install disk and partitioning utilities
+  community.general.xbps:
+    run_once: true
+    name:
+      - snapper
+      - attr-progs
+      - acl-progs
 
-- name: Resize root partition
-  community.general.filesystem:
-    fstype: btrfs
-    dev: /dev/mmcblk0p3
-    resizefs: true
+- name: Delete root partition
+  ansible.builtin.command:
+    run_once: true
+    argv:
+      - parted
+      - rm 
+      - 3
+
+- name: Recreate root partition
+  ansible.builtin.command:
+    run_once: true
+    argv:
+      - parted
+      - mkpart
+      - primary
+      - btrfs
+      - 576M
+      - -1
+
+- name: Run partprobe (XXX find some way to do this with /sys)
+  ansible.builtin.command:
+    run_once: true
+    argv:
+      - partprobe
+
+- name: BTRFS rezize root filesystem
+  ansible.builtin.command:
+    run_once: true
+    argv:
+      - btrfs
+      - fi
+      - resize
+      - max
+      - /
+
+- name: Make swapfile directory
+  ansible.builtin.command:
+    run_once: true
+    argv:
+      - mkdir /var/swap
+
+- name: Set nocow swapfile directory
+  ansible.builtin.command:
+    run_once: true
+    argv:
+      - chattr +C /var/swap
+
+- name: Create swapfile (zerolength)
+  ansible.builtin.command:
+    run_once: true
+    argv:
+      - touch /var/swap/swapfile
+
+- name: Set swapfile nowcow
+  ansible.builtin.command:
+    run_once: true
+    argv:
+      - chattr +C /var/swap/swapfile
+
+- name: Allocate swapfile fullsize
+  ansible.builtin.command:
+    run_once: true
+    argv:
+      - fallocate -l 4g /var/swap/swapfile
+
+- name: Format swapfile
+  ansible.builtin.command:
+    run_once: true
+    argv:
+      - mkswap /var/swap/swapfile
+
+- name: Mount swapfile
+  ansible.builtin.command:
+    run_once: true
+    argv:
+      - swapon /var/swap/swapfile
+
+- name: Get swapfile UUID
+  ansible.builtin.command:
+    run_once: true
+    register: swap_uuid
+    capture_output: yes
+    argv:
+      - findmnt -no UUID -T /var/swap/swapfile
+
+- name: Remount /boot (rw)
+  ansible.builtin.command:
+    run_once: true
+    argv:
+      - mount -o remount,rw /boot
+
+- name: cmdline.txt (swap)
+  ansible.builtin.template:
+    run_once: true
+    src: templates/boot/cmdline.txt.j2
+    dest: /boot/cmdline.txt
+
+- name: Remount /boot (ro)
+  ansible.builtin.command:
+    run_once: true
+    argv:
+      - mount -o remount,ro /boot
+
+- name: Enable snapperd
+  ansible.builtin.file:
+    run_once: true
+    src: /etc/sv/snapperd
+    dest: /etc/runit/runsvdir/default/snapperd
+    owner: root
+    group: root
+    state: link
+
+- name: fstab (swap)
+  ansible.builtin.template:
+    run_once: true
+    src: templates/etc/fstab.j2
+    dest: /etc/fstab
 

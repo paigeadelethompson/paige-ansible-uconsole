@@ -1,20 +1,4 @@
 - hosts: localhost
   connection: local
   roles:
-    - disk
-    - aisbergg.snapper
-    - layereight.wifi
     - install
-  vars:
-    wifi_ssid: "my_wifi_name"
-    wifi_psk: "my_wifi_password"	
-    snapper_templates:
-      default:
-        TIMELINE_LIMIT_HOURLY: 2
-        TIMELINE_LIMIT_DAILY: 12
-    snapper_configs:
-      - path: /
-        name: uconsole
-        vars:
-          TIMELINE_LIMIT_HOURLY: 2
-          TIMELINE_LIMIT_DAILY: 12

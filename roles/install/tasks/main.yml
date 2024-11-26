@@ -1,12 +1,56 @@
 - name: Install full userland
   community.general.xbps:
+    run_once: true
     name:
-      - zzz
       - zzz-user-hooks
+      - irssi
+      - pidgin
+      - pidgin-gpg
+      - carbons
+      - pidgin-otr
+      - pidgin-sipe
+      - lurch
+      - iftop
+      - powertop
+      - cpupower
+      - i3
+      - 7zip
+      - tailscale
+      - dcron
+      - flatpak
+      - nmap
+      - zmap
+      - socat
+      - tcpdump
+      - keepassxc
+      - wine-mono
+      - winetricks
+      - gstreamer-vaapi
+      - mesa-vaaapi
+      - samba
+      - android-tools
+      - ModemManager
+      - par2cmdline
+      - runit-nftables
+      - pinentry-qt
+      - neofetch
+      - mesa-vulkan-broadcom 
+      - Vulkan-Tools
+      - unrar
+      - dtc
+      - dtc-devel
+      - plasma-wayland-protocols	
+      - mesa
+      - xorg-video-drivers
+      - xf86-video-fbdev
+      - seatd
+      - turnstile
+      - qt5-tools
+      - sway
       - NetworkManager
       - avahi
+      - cups
       - lldpd
-      - openssh
       - minidlna
       - docker
       - docker-compose
@@ -25,7 +69,6 @@
       - scapy
       - jq
       - parallel
-      - emacs
       - weston
       - weston-xwayland
       - kmail
@@ -82,12 +125,18 @@
       - wireguard-tools
       - tor
       - wireshark
+      - sddm
     state: present
+
+- name: SDDM configuration
+  ansible.builtin.template:
+    src: templates/etc/sddm.conf.j2
+    dest: /etc/sddm.conf
 
 - name: Enable D-BUS
   ansible.builtin.file:
     src: /etc/sv/dbus
-    dest: /etc/runit/runsvdir/default/
+    dest: /etc/runit/runsvdir/default/dbus
     owner: root
     group: root
     state: link
@@ -95,7 +144,7 @@
 - name: Enable SDDM
   ansible.builtin.file:
     src: /etc/sv/sddm
-    dest: /etc/runit/runsvdir/default/
+    dest: /etc/runit/runsvdir/default/sddm
     owner: root
     group: root
     state: link
@@ -103,7 +152,251 @@
 - name: Enable NetworkManager
   ansible.builtin.file:
     src: /etc/sv/NetworkManager
-    dest: /etc/runit/runsvdir/default/
+    dest: /etc/runit/runsvdir/default/NetworkManager
     owner: root
     group: root
     state: link
+
+- name: Enable SSHd
+  ansible.builtin.file:
+    src: /etc/sv/docker
+    dest: /etc/runit/runsvdir/default/sshd
+    owner: root
+    group: root
+    state: link
+
+- name: Enable nftables
+  ansible.builtin.file:
+    src: /etc/sv/nftables
+    dest: /etc/runit/runsvdir/default/nftables
+    owner: root
+    group: root
+    state: link
+
+- name: Enable lldpd
+  ansible.builtin.file:
+    src: /etc/sv/lldpd
+    dest: /etc/runit/runsvdir/default/lldpd
+    owner: root
+    group: root
+    state: link
+
+- name: Download Antigen
+  ansible.builtin.get_url:
+    url: git.io/antigen
+    dest: /usr/share/antigen.zsh
+    mode: '0644'
+
+- name: .zshrc
+  ansible.builtin.template:
+    src: templates/home/pi/.zshrc.j2
+    dest: /home/pi/.zshrc
+
+- name: Change user shell to zsh 
+  become: yes
+  user:
+    name: pi
+    shell: /usr/bin/zsh
+
+- name: SDDM configuration
+  ansible.builtin.template:
+    src: templates/etc/sddm.conf.j2
+    dest: /etc/sddm.conf
+
+- name: Enable D-BUS
+  ansible.builtin.file:
+    src: /etc/sv/dbus
+    dest: /etc/runit/runsvdir/default/dbus
+    owner: root
+    group: root
+    state: link
+
+- name: Enable SDDM
+  ansible.builtin.file:
+    src: /etc/sv/sddm
+    dest: /etc/runit/runsvdir/default/sddm
+    owner: root
+    group: root
+    state: link
+
+- name: Enable NetworkManager
+  ansible.builtin.file:
+    src: /etc/sv/NetworkManager
+    dest: /etc/runit/runsvdir/default/NetworkManager
+    owner: root
+    group: root
+    state: link
+
+- name: Enable SSHd
+  ansible.builtin.file:
+    src: /etc/sv/sshd
+    dest: /etc/runit/runsvdir/default/sshd
+    owner: root
+    group: root
+    state: link
+
+- name: Enable lldpd
+  ansible.builtin.file:
+    src: /etc/sv/lldpd
+    dest: /etc/runit/runsvdir/default/lldpd
+    owner: root
+    group: root
+    state: link
+
+- name: Enable minidlna
+  ansible.builtin.file:
+    src: /etc/sv/minidlnad
+    dest: /etc/runit/runsvdir/default/minidlnad
+    owner: root
+    group: root
+    state: link
+
+- name: Enable avahi
+  ansible.builtin.file:
+    src: /etc/sv/avahi-daemon
+    dest: /etc/runit/runsvdir/default/avahi-daemon
+    owner: root
+    group: root
+    state: link
+
+- name: Enable bluetoothd
+  ansible.builtin.file:
+    src: /etc/sv/bluetoothd
+    dest: /etc/runit/runsvdir/default/bluetoothd
+    owner: root
+    group: root
+    state: link
+
+- name: Enable rtkit
+  ansible.builtin.file:
+    src: /etc/sv/rtkit
+    dest: /etc/runit/runsvdir/default/rtkit
+    owner: root
+    group: root
+    state: link
+
+- name: Enable dnsmasq
+  ansible.builtin.file:
+    src: /etc/sv/dnsmasq
+    dest: /etc/runit/runsvdir/default/dnsmasq
+    owner: root
+    group: root
+    state: link
+
+- name: Enable libvirtd
+  ansible.builtin.file:
+    src: /etc/sv/libvirtd
+    dest: /etc/runit/runsvdir/default/libvirtd
+    owner: root
+    group: root
+    state: link
+
+- name: Enable docker
+  ansible.builtin.file:
+    src: /etc/sv/docker
+    dest: /etc/runit/runsvdir/default/docker
+    owner: root
+    group: root
+    state: link
+
+- name: Enable binfmt-support
+  ansible.builtin.file:
+    src: /etc/sv/binfmt-support
+    dest: /etc/runit/runsvdir/default/binfmt-support
+    owner: root
+    group: root
+    state: link
+
+- name: Enable cups
+  ansible.builtin.file:
+    src: /etc/sv/cupsd
+    dest: /etc/runit/runsvdir/default/cupsd
+    owner: root
+    group: root
+    state: link
+
+- name: Enable saned
+  ansible.builtin.file:
+    src: /etc/sv/saned
+    dest: /etc/runit/runsvdir/default/saned
+    owner: root
+    group: root
+    state: link
+
+- name: Enable tor
+  ansible.builtin.file:
+    src: /etc/sv/tor
+    dest: /etc/runit/runsvdir/default/tor
+    owner: root
+    group: root
+    state: link
+
+- name: Enable nftables
+  ansible.builtin.file:
+    src: /etc/sv/nftables
+    dest: /etc/runit/runsvdir/default/nftables
+    owner: root
+    group: root
+    state: link
+
+- name: Enable crond
+  ansible.builtin.file:
+    src: /etc/sv/crond
+    dest: /etc/runit/runsvdir/default/crond
+    owner: root
+    group: root
+    state: link
+
+- name: Enable smbd
+  ansible.builtin.file:
+    src: /etc/sv/smbd
+    dest: /etc/runit/runsvdir/default/smbd
+    owner: root
+    group: root
+    state: link
+
+- name: Enable nmbd
+  ansible.builtin.file:
+    src: /etc/sv/nmbd
+    dest: /etc/runit/runsvdir/default/nmbd
+    owner: root
+    group: root
+    state: link
+
+- name: Enable tailscaled
+  ansible.builtin.file:
+    src: /etc/sv/tailscaled
+    dest: /etc/runit/runsvdir/default/tailscaled
+    owner: root
+    group: root
+    state: link
+
+- name: Download Antigen
+  ansible.builtin.get_url:
+    url: https://git.io/antigen
+    dest: /usr/share/antigen.zsh
+    mode: '0644'
+
+- name: .zshrc
+  ansible.builtin.template:
+    src: templates/home/pi/.zshrc.j2
+    dest: /home/pi/.zshrc
+
+- name: issue
+  ansible.builtin.template:
+    src: templates/etc/issue
+    dest: /etc/issue
+
+- name: sshd_config
+  ansible.builtin.template:
+    src: templates/etc/ssh/sshd_config
+    dest: /etc/ssh/sshd_config
+
+- name: Adding user to groups
+  user: 
+    name: pi
+    group: pi
+    shell: /usr/bin/zsh
+    groups: pi dialout audio video adm cdrom scanner dbus input plugdev users _seatd bluetooth spi i2c gpio docker bluetooth lpadmin wireshark
+    append: yes
+    # XXX ssh_fingerprint

@@ -8,6 +8,7 @@
 - With the SDCard inserted into the computer, mount the second partition of the SDCard to a mountpoint (ex `mount -t exfat /dev/mmcblk0p2 /mnt`)
 - git clone to the second partition on the Void Linux image (ex: `cd /mnt ; git clone git@github.com:paigeadelethompson/paige-ansible-uconsole.git`
 - Edit the `wpa_supplicant.conf` file (WiFi configuration for post-boot installation)
+- unmount the sideload partition, eject the SDCard and insert into the uConsole
 - boot on uconsole
 - login as `pi`
 - `sudo ansible-playbook -vvvvvv /mnt/sideload/install.yml`

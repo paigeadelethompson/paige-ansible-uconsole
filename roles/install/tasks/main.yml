@@ -213,12 +213,7 @@
   user:
     name: pi
     shell: /usr/bin/zsh
-
-- name: SDDM configuration
-  ansible.builtin.template:
-    src: templates/etc/sddm.conf.j2
-    dest: /etc/sddm.conf
-
+    
 - name: Enable D-BUS
   ansible.builtin.file:
     src: /etc/sv/dbus
@@ -226,23 +221,7 @@
     owner: root
     group: root
     state: link
-
-- name: Enable SDDM
-  ansible.builtin.file:
-    src: /etc/sv/sddm
-    dest: /etc/runit/runsvdir/default/sddm
-    owner: root
-    group: root
-    state: link
-
-- name: Enable NetworkManager
-  ansible.builtin.file:
-    src: /etc/sv/NetworkManager
-    dest: /etc/runit/runsvdir/default/NetworkManager
-    owner: root
-    group: root
-    state: link
-
+    
 - name: Enable SSHd
   ansible.builtin.file:
     src: /etc/sv/sshd
@@ -415,4 +394,3 @@
     shell: /usr/bin/zsh
     groups: pi dialout audio video adm cdrom scanner dbus input plugdev users _seatd bluetooth spi i2c gpio docker bluetooth lpadmin wireshark
     append: yes
-    # XXX ssh_fingerprint

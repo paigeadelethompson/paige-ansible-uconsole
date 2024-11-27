@@ -1,4 +1,7 @@
-This can be used with the Void Linux uConsole image (https://github.com/paigeadelethompson/void-uconsole?tab=readme-ov-file) to install a more comprehensive OS. 
+# Notes
+- This can be used with the Void Linux uConsole image (https://github.com/paigeadelethompson/void-uconsole?tab=readme-ov-file) to install a more comprehensive OS. 
+- This is still a WIP, if you know and understand Ansible please help out with testing and contribute so that this can be improved =)
+
 
 # Quickstart
 - Write the Void Linux uConsole image to an SDcard (instructions and image releases are here: https://github.com/paigeadelethompson/void-uconsole?tab=readme-ov-file)

@@ -12,3 +12,6 @@
 - login as `pi`
 - `sudo ansible-playbook -vvvvvv /mnt/sideload/install.yml`
 - `reboot`
+
+## Start KDE
+- login as `pi` then run: `dbus-run-session startplasma-wayland`. Refer to Github issues in this repository for more info on the status of things that are not working or to report problems. 

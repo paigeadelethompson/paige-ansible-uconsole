@@ -2,6 +2,9 @@
   community.general.xbps:
     run_once: true
     name:
+      - python3-pylint
+      - python3-pytest
+      - python3-docutils
       - libva-vdpau-driver
       - mesa-vdpau
       - vdpauinfo

@@ -2,6 +2,7 @@
   community.general.xbps:
     run_once: true
     name:
+      - pulseeffects
       - power-profiles-daemon
       - qt5-lottie
       - qt6-lottie

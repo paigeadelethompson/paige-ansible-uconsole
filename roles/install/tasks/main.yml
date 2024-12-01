@@ -2,6 +2,10 @@
   community.general.xbps:
     run_once: true
     name:
+      - libva-vdpau-driver
+      - mesa-vdpau
+      - vdpauinfo
+      - meson
       - lsp-plugins-ladspa
       - pulseaudio-equalizer-ladspa
       - pulseeffects-legacy

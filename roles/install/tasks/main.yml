@@ -4,6 +4,7 @@
     name:
       - strace
       - python-pip
+      - python3-pip
       - mesa-dri
       - kicad
       - kicad-footprints

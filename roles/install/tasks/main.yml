@@ -2,6 +2,8 @@
   community.general.xbps:
     run_once: true
     name:
+      - libosinfo
+      - libxml2-python3
       - libvirt-python3
       - libvirt-glib
       - python3-pylint

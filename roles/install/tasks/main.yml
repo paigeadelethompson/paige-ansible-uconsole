@@ -2,6 +2,7 @@
   community.general.xbps:
     run_once: true
     name:
+      - lsp-plugins-ladspa
       - pulseaudio-equalizer-ladspa
       - pulseeffects-legacy
       - power-profiles-daemon

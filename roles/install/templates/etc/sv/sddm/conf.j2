@@ -1,0 +1,12 @@
+DisplayServer=wayland
+HaltCommand=/usr/bin/poweroff
+Numlock=none
+RebootCommand=/usr/bin/reboot
+DefaultPath=/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/sbin:/bin
+RememberLastSession=true
+RememberLastUser=true
+ReuseSession=true
+CompositorCommand="weston --shell=kiosk"
+SessionCommand=/usr/share/sddm/scripts/wayland-session
+SessionDir=/usr/local/share/wayland-sessions,/usr/share/wayland-sessions
+SessionLogFile=.local/share/sddm/wayland-session.log

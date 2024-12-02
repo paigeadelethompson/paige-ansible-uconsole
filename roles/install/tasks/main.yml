@@ -2,6 +2,11 @@
   community.general.xbps:
     run_once: true
     name:
+      - NetworkManager-l2tp 
+      - NetworkManager-openconnect 
+      - NetworkManager-pptp 
+      - NetworkManager-strongswan 
+      - NetworkManager-vpnc
       - kwalletmanager
       - mixxx
       - spice-gtk
@@ -173,8 +178,8 @@
 
 - name: SDDM configuration
   ansible.builtin.template:
-    src: templates/etc/sddm.conf.j2
-    dest: /etc/sddm.conf
+    src: templates/etc/sv/sddm/conf.j2
+    dest: /etc/sv/sddm/conf
 
 - name: Enable D-BUS
   ansible.builtin.file:
@@ -196,6 +201,14 @@
   ansible.builtin.file:
     src: /etc/sv/NetworkManager
     dest: /etc/runit/runsvdir/default/NetworkManager
+    owner: root
+    group: root
+    state: link
+
+- name: Enable power-profiles-daemon
+  ansible.builtin.file:
+    src: /etc/sv/power-profiles-daemon
+    dest: /etc/runit/runsvdir/default/power-profiles-daemon
     owner: root
     group: root
     state: link
@@ -392,6 +405,43 @@
     owner: root
     group: root
     state: link
+
+- name: Enable seatd
+  ansible.builtin.file:
+    src: /etc/sv/seatd
+    dest: /etc/runit/runsvdir/default/seatd
+    owner: root
+    group: root
+    state: link
+
+- name: Enable turnstiled
+  ansible.builtin.file:
+    src: /etc/sv/turnstiled
+    dest: /etc/runit/runsvdir/default/turnstiled
+    owner: root
+    group: root
+    state: link
+
+- name: Enable virtlogd
+  ansible.builtin.file:
+    src: /etc/sv/virtlogd
+    dest: /etc/runit/runsvdir/default/virtlogd
+    owner: root
+    group: root
+    state: link
+
+- name: Enable snapperd
+  ansible.builtin.file:
+    src: /etc/sv/snapperd
+    dest: /etc/runit/runsvdir/default/snapperd
+    owner: root
+    group: root
+    state: link
+
+- name: Disable wpa_supplicant
+  file:
+   path: "/var/service/wpa_supplicant"
+   state: absent
 
 - name: Download Antigen
   ansible.builtin.get_url:

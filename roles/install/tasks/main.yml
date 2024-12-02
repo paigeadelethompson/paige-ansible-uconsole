@@ -2,6 +2,7 @@
   community.general.xbps:
     run_once: true
     name:
+      - mixxx
       - spice-gtk
       - gtk-vnc
       - python3-PyVirtualDisplay

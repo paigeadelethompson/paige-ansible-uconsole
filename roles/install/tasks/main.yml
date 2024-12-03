@@ -3,7 +3,6 @@
     run_once: true
     name:
       - qt5-gamepad
-      - qt6-gamepad
       - qt5-webchannel-devel
       - qt6-webchannel-devel
       - qt5-webengine-devel

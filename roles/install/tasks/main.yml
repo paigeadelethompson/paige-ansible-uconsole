@@ -2,6 +2,19 @@
   community.general.xbps:
     run_once: true
     name:
+      - libhackrf-devel 
+      - libairspy-devel 
+      - libopusenc-devel 
+      - librtlsdr-devel 
+      - libiio-devel 
+      - libairspyhf-devel 
+      - libavcodec 
+      - libavformat 
+      - libavdevice 
+      - libavutil 
+      - libavfilter 
+      - libswscale 
+      - libpostproc
       - fftw-devel
       - boost-devel
       - qt5-gamepad-devel

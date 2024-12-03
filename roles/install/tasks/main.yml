@@ -2,6 +2,8 @@
   community.general.xbps:
     run_once: true
     name:
+      - qt5-webengine-devel
+      - qt6-webengine-devel
       - qt5-svg-devel
       - qt6-svg-devel
       - qt6-speech-devel

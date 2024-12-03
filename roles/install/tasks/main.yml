@@ -10,8 +10,11 @@
       - qt5-speech-devel
       - qt5-serialport-devel
       - qt5-charts-devel
+      - qt6-charts-devel
       - qt5-location-devel
+      - qt6-location-devel
       - qt5-multimedia-devel
+      - qt6-multimedia-devel
       - qt5-websockets-devel 
       - qt6-websockets-devel 
       - qt6-declarative-devel 

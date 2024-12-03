@@ -2,7 +2,7 @@
   community.general.xbps:
     run_once: true
     name:
-      - qt5-gamepad
+      - qt5-gamepad-devel
       - qt5-webchannel-devel
       - qt6-webchannel-devel
       - qt5-webengine-devel

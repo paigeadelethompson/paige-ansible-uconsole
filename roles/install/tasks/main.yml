@@ -2,6 +2,8 @@
   community.general.xbps:
     run_once: true
     name:
+      - qt5-websockets-devel 
+      - qt6-websockets-devel 
       - qt6-declarative-devel 
       - qt5-declarative-devel
       - qt6-base-devel

@@ -2,6 +2,7 @@
   community.general.xbps:
     run_once: true
     name:
+      - qt6-base-devel
       - NetworkManager-l2tp 
       - NetworkManager-openconnect 
       - NetworkManager-pptp 

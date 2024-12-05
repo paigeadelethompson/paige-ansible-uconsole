@@ -119,7 +119,6 @@
       - android-tools
       - ModemManager
       - par2cmdline
-      - runit-nftables
       - pinentry-qt
       - neofetch
       - mesa-vulkan-broadcom 
@@ -261,14 +260,6 @@
     group: root
     state: link
 
-- name: Enable nftables
-  ansible.builtin.file:
-    src: /etc/sv/nftables
-    dest: /etc/runit/runsvdir/default/nftables
-    owner: root
-    group: root
-    state: link
-
 - name: Enable lldpd
   ansible.builtin.file:
     src: /etc/sv/lldpd
@@ -402,14 +393,6 @@
   ansible.builtin.file:
     src: /etc/sv/tor
     dest: /etc/runit/runsvdir/default/tor
-    owner: root
-    group: root
-    state: link
-
-- name: Enable nftables
-  ansible.builtin.file:
-    src: /etc/sv/nftables
-    dest: /etc/runit/runsvdir/default/nftables
     owner: root
     group: root
     state: link

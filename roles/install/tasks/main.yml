@@ -2,6 +2,8 @@
   community.general.xbps:
     run_once: true
     name:
+      - ufw
+      - plasma-firewall
       - libhackrf-devel 
       - libairspy-devel 
       - libopusenc-devel 

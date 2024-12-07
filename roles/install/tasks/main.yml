@@ -2,6 +2,8 @@
   community.general.xbps:
     run_once: true
     name:
+      - xscreensaver
+      - libflac-devel
       - clinfo
       - fwupd
       - ufw
